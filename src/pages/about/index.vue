@@ -11,8 +11,5 @@
 </script>
 
 <style>
-  .settings{
-    height: 100vh;
-    background: goldenrod;
-  }
+
 </style>

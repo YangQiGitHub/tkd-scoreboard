@@ -2,14 +2,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import { Rate, Divider } from 'iview'
+import { Divider, Card, Input, Tag, Message, Select, Option, Icon, Drawer, Button, Cascader } from 'iview'
 import 'iview/dist/styles/iview.css'
 
 ((components) => {
   Object.keys(components).forEach((key) => {
     Vue.component(key, components[key])
   })
-})({ Rate, Divider })
+})({ Divider, Card, Input, Tag, Select, Option, Icon, Drawer, Button, Cascader })
+
+Vue.prototype.$Message = Message
 
 new Vue({
   router,
