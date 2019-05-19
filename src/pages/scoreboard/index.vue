@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
- 
+
     <Drawer
       title="比赛设置"
       v-model="drawerShow"
@@ -132,7 +132,7 @@
         比赛时长<InputNumber :precision="0" :step="30" :min="0" v-model="tempData.roundSeconds"></InputNumber>秒
       </div>
       <br>
-      清空比分？<i-switch v-model="tempData.clearScore" /> <span v-show="tempData.clearScore" style="color: red;">点击确认后会清空比分和时间哦~</span><br><br>
+      清空比分？<i-switch v-model="tempData.clearScore" /> <span v-show="tempData.clearScore" style="color: red;">点击确认后会清空比分哦~</span><br><br>
       <div>
         <Collapse v-model="value1">
           <Panel name="1">
@@ -159,6 +159,7 @@
       </div>
     </Drawer>
   </div>
+
   <!-- <div class="settings">
     <Card>
      
@@ -172,7 +173,7 @@
     name: 'Scoreboard',
     data() {
       return {
-        drawerShow: true,
+        drawerShow: false,
         scene: '',
         welcomes: '',
         athletes: [],
@@ -233,7 +234,6 @@
         this.roundSeconds = roundSeconds
         this.extraroundSeconds = extraroundSeconds
       }
-      // localStorage.athletes && this.athletes = localStorage.athletes.split(',')
     },
     methods: { 
       checkInfo () {
@@ -254,7 +254,6 @@
         if (this.athletes.includes(name)) return this.$Message.error('有重名了哦~')
         this.athletes.push(name)
         localStorage.setItem('athletes', this.athletes)
-        // console.log(localStorage.athletes, this.athletes, localStorage.getItem('athletes'))
       },
       delAthlete(idx) {
         this.athletes.splice(idx, 1)
@@ -272,6 +271,7 @@
         this.timer = setInterval(() => {
           if (this.countTimeSec === 0) {
             clearInterval(this.timer)
+            document.getElementById('audiotagbell').play()
             return this.timer = 0
           }
           this.countTimeSec -= 1
@@ -327,7 +327,9 @@
         strategy[action](who, attr)
       },
       showDrawer () {
-        this.tempData.roundSeconds = this.countTimeSec
+        if (this.countTimeSec) {
+          this.tempData.roundSeconds = this.countTimeSec
+        }
         clearInterval(this.timer)
         this.drawerShow = true
       },
