@@ -214,7 +214,7 @@
     name: 'Scoreboard',
     data() {
       return {
-        drawerShow: true,
+        drawerShow: false,
         scene: '',
         welcomes: '',
         athletes: [],
@@ -240,7 +240,7 @@
             secondReading: 0
           }
         },
-        value1: ['2'],
+        value1: ['1'],
         timer: 0,
         countTimeSec: 0,
         tempData: {
