@@ -364,7 +364,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .match-settings{
   position: fixed;
   right: 20px;
