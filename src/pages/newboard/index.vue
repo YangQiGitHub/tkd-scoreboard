@@ -30,7 +30,7 @@
           <Icon class="icon" :style="iconClass" @click="scoreChange('red.warn.add')" type="md-add" :size="style.iconSize" />
         </div>
         <div class="content" :style="contentStyle" style="position: relative;">
-          <div v-for="item in (performer.red.warn)" :key="item" class="dot"></div>
+          <div v-for="item in (performer.red.warn)" :key="item" class="dot" :style="dotStyle"></div>
           <img src="../../lib/images/a.png" @click="showDrawer" alt="" class="logo">
         </div>
       </div>
@@ -49,7 +49,7 @@
           <Icon class="icon" :style="iconClass" @click="scoreChange('red.secondReading.add')" type="md-add" :size="style.iconSize" />
         </div>
         <div class="content" :style="contentStyle">
-          <div v-for="item in (performer.red.secondReading)" :key="item" class="dot"></div>
+          <div v-for="item in (performer.red.secondReading)" :key="item" class="dot" :style="dotStyle"></div>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
           <Icon class="icon" :style="iconClass" @click="scoreChange('blue.warn.add')" type="md-add" :size="style.iconSize" />
         </div>
         <div class="content" :style="contentStyle" style="position: relative;">
-          <div v-for="item in (performer.blue.warn)" :key="item" class="dot"></div>
+          <div v-for="item in (performer.blue.warn)" :key="item" class="dot" :style="dotStyle"></div>
           <img src="../../lib/images/b.png" @click="showDrawer" alt="" class="logo">
         </div>
       </div>
@@ -100,7 +100,7 @@
           <Icon class="icon" :style="iconClass" @click="scoreChange('blue.secondReading.add')" type="md-add" :size="style.iconSize" />
         </div>
         <div class="content" :style="contentStyle">
-          <div v-for="item in (performer.blue.secondReading)" :key="item" class="dot"></div>
+          <div v-for="item in (performer.blue.secondReading)" :key="item" class="dot" :style="dotStyle"></div>
         </div>
       </div>
     </div>
@@ -143,6 +143,7 @@
     </div>
     <br>
     清空比分？<i-switch v-model="tempData.clearScore" /> <span v-show="tempData.clearScore" style="color: red;">点击确认后会清空比分哦~</span><br><br>
+    <Button type="primary" @click="confirmInfo" long>确认</Button><br><br>
     <div>
       <Collapse v-model="value1" accordion>
         <Panel name="1">
@@ -189,27 +190,58 @@
             <Slider v-model="style.outerColumn" :max="100"></Slider>
             红色/蓝色面板间隙
             <Slider v-model="style.gap" :max="200"></Slider>
+            倒计时区域字体颜色：<ColorPicker v-model="style.midFontColor" alpha />
+            <br><br>
             倒计时区域大小
             <Slider v-model="style.midSize" :max="800"></Slider>
             倒计时区域字体大小
             <Slider v-model="style.midFontSize" :max="200"></Slider>
+            <br><br>
             红方背景起始颜色：<ColorPicker v-model="style.redStart" alpha /> 红方背景终止颜色：<ColorPicker v-model="style.redEnd" alpha />
             <br>
             <br>
             蓝方背景起始颜色：<ColorPicker v-model="style.blueStart" alpha /> 蓝方背景起始颜色：<ColorPicker v-model="style.blueEnd" alpha />
+            <br><br>
+            （警告、读秒）圆点大小
+            <Slider v-model="style.dotSize" :max="200"></Slider>
+            （警告、读秒）圆点颜色：<ColorPicker v-model="style.dotColor" alpha />
+            <Divider dashed />
+
+            <Button @click="storeCfg" type="primary">存为预设</Button> “存为预设”后，所设置的主题样式在页面刷新后依然保留，否则刷新后将恢复默认样式
+            <br><br>
+            <Button @click="getDefaultTheme" type="default">恢复默认</Button>
           </div>
         </Panel>
       </Collapse>
-    </div>
-    <br>
-    <div class="drawer-footer">
-      <Button type="primary" @click="confirmInfo" long>确认</Button>
     </div>
   </Drawer>
 </div>
 </template>
 
 <script>
+  let defaultTheme = {
+    iconSize: 40,
+    btnBg: '#ffffff',
+    btnFontColor: '#333333',
+    titleFontSize: 40,
+    contentFontSize: 200,
+    nameFontSize: 70,
+    firstRow: 150,
+    lastRow: 250,
+    outerColumn: 26,
+    midSize: 440,
+    midFontSize: 80,
+    redStart: '#ce3301',
+    redEnd: '#ff8f6b',
+    blueStart: '#0000cd',
+    blueEnd: '#8787fb',
+    gap: 0,
+    panelPadding: 10,
+    panelBg: '#ffffff',
+    midFontColor: 'rgba(42,42,36,1)',
+    dotSize: 50,
+    dotColor: 'yellow'
+  }
   export default {
     name: 'Scoreboard',
     data() {
@@ -251,26 +283,7 @@
           round: '',
           roundSeconds: 0,
         },
-        style: {
-          iconSize: 40,
-          btnBg: '#ffffff',
-          btnFontColor: '#333333',
-          titleFontSize: 40,
-          contentFontSize: 200,
-          nameFontSize: 70,
-          firstRow: 150,
-          lastRow: 250,
-          outerColumn: 26,
-          midSize: 440,
-          midFontSize: 80,
-          redStart: '#ce3301',
-          redEnd: '#ff8f6b',
-          blueStart: '#0000cd',
-          blueEnd: '#8787fb',
-          gap: 0,
-          panelPadding: 10,
-          panelBg: '#ffffff'
-        }
+        style: defaultTheme
       }
     },
     mounted() {
@@ -289,24 +302,36 @@
         } catch (error) {
           
         }
-        console.log(timeObj)
         const {roundNum, roundSeconds, extraroundSeconds} = timeObj
         this.roundNum = roundNum
         this.roundSeconds = roundSeconds
         this.extraroundSeconds = extraroundSeconds
       }
+      if (window.localStorage.theme) {
+        let style = {}
+        try {
+          style = JSON.parse(window.localStorage.theme)
+        } catch (error) {
+
+        }
+        this.style = style
+      }
     },
     methods: {
-      btnTransparency (val) {
-        return '' + val + '%';
+      storeCfg () {
+        localStorage.setItem('theme', JSON.stringify(this.style))
+        this.$Message.success('保存成功~')
+      },
+      getDefaultTheme() {
+        this.style = defaultTheme
+        localStorage.setItem('theme', JSON.stringify(this.style))
       },
       checkInfo () {
         const nameOk = !!(this.performer.red.name && this.performer.blue.name)
-        const timeOk = !!this.countTimeSec
         const roundOk = !!this.scene
-        const ok = !!(nameOk && timeOk && roundOk)
+        const ok = !!(nameOk && roundOk)
         if (!ok) {
-          this.$Message.error('请先配置比赛信息')
+          this.$Message.error('点击logo,请配置比赛信息')
         }
         return !ok
       },
@@ -391,10 +416,12 @@
         strategy[action](who, attr)
       },
       showDrawer () {
+        if (this.timer) {
+          return this.$Message.error('请先暂停时间')
+        }
         if (this.countTimeSec) {
           this.tempData.roundSeconds = this.countTimeSec
         }
-        clearInterval(this.timer)
         this.drawerShow = true
       },
       storageInfo () {
@@ -436,7 +463,15 @@
         return {
           width: this.style.midSize + 'px',
           height: (this.style.midSize * 396) / 440 + 'px',
-          fontSize: this.style.midFontSize + 'px'
+          fontSize: this.style.midFontSize + 'px',
+          color: this.style.midFontColor
+        }
+      },
+      dotStyle() {
+        return {
+          width: this.style.dotSize + 'px',
+          height: this.style.dotSize + 'px',
+          background: this.style.dotColor
         }
       },
       redBgStyle() {
@@ -498,7 +533,6 @@
     &-item{
       .font-md;
       flex: 1;
-      color: black;
       opacity: 0.8;
     }
     &-top{
@@ -506,6 +540,7 @@
     }
     &-btm{
       padding-bottom: 16%;
+      font-weight: 500;
     }
   }
   .board{
@@ -613,10 +648,6 @@
     border-radius: 50%;
     background: yellow;
     margin: 10px;
-  }
-  .drawer-footer{
-    position: absolute;
-    bottom: 0;
   }
   .logo{
     position: absolute;
