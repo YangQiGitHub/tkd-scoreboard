@@ -82,7 +82,7 @@
         </div>
         <div class="content" :style="contentStyle" style="position: relative;">
           <div v-for="item in (performer.red.warn)" :key="item" class="dot" :style="dotStyle"></div>
-          <img src="../../lib/images/b.png" @click="showDrawer" alt="" class="logo">
+          <img src="../../lib/images/tkd.png" @click="showDrawer" alt="" class="logo">
         </div>
       </div>
       <div class="valid">
