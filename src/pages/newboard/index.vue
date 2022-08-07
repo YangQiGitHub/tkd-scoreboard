@@ -5,58 +5,7 @@
     <div class="mid-item mid-btm">{{sec2Time}}</div>
   </div>
   <div class="board">
-    <div class="board-item board-left" :style="redBgStyle" >
-      <div class="name" :style="nameStyle">{{performer.red.name}}</div>
-      <div class="attention">
-        <div class="title" :style="titleStyle">
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.attention.remove')" type="md-remove" :size="style.iconSize" />
-          &nbsp;注意&nbsp;
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.attention.add')" type="md-add" :size="style.iconSize" />
-        </div>
-        <div class="content" :style="contentStyle">{{performer.red.attention}}</div>
-      </div>
-      <div class="advantage">
-        <div class="title" :style="titleStyle">
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.advantageAttack.remove')" type="md-remove" :size="style.iconSize" />
-          &nbsp;优势&nbsp;
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.advantageAttack.add')" type="md-add" :size="style.iconSize" />
-        </div>
-        <div class="content" :style="contentStyle">{{performer.red.advantageAttack}}</div>
-      </div>
-      <div class="warn">
-        <div class="title" :style="titleStyle">
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.warn.remove')" type="md-remove" :size="style.iconSize" />
-          &nbsp;警告&nbsp;
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.warn.add')" type="md-add" :size="style.iconSize" />
-        </div>
-        <div class="content" :style="contentStyle" style="position: relative;">
-          <div v-for="item in (performer.red.warn)" :key="item" class="dot" :style="dotStyle"></div>
-          <img src="../../lib/images/a.png" @click="showDrawer" alt="" class="logo">
-        </div>
-      </div>
-      <div class="valid">
-        <div class="title" :style="titleStyle">
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.normalAttack.remove')" type="md-remove" :size="style.iconSize" />
-          &nbsp;有效&nbsp;
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.normalAttack.add')" type="md-add" :size="style.iconSize" />
-        </div>
-        <div class="content" :style="contentStyle">{{performer.red.normalAttack}}</div>
-      </div>
-      <div class="read">
-        <div class="title" :style="titleStyle">
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.secondReading.remove')" type="md-remove" :size="style.iconSize" />
-          &nbsp;读秒&nbsp;
-          <Icon class="icon" :style="iconClass" @click="scoreChange('red.secondReading.add')" type="md-add" :size="style.iconSize" />
-        </div>
-        <div class="content" :style="contentStyle">
-          <div v-for="item in (performer.red.secondReading)" :key="item" class="dot" :style="dotStyle"></div>
-        </div>
-      </div>
-    </div>
-
-    <div :style="{width: style.gap + 'px'}"></div>
-
-    <div class="board-item board-right" :style="blueBgStyle">
+    <div class="board-item board-left" :style="blueBgStyle" >
       <div class="name" :style="nameStyle">{{performer.blue.name}}</div>
       <div class="attention">
         <div class="title" :style="titleStyle">
@@ -82,7 +31,7 @@
         </div>
         <div class="content" :style="contentStyle" style="position: relative;">
           <div v-for="item in (performer.blue.warn)" :key="item" class="dot" :style="dotStyle"></div>
-          <img src="../../lib/images/b.png" @click="showDrawer" alt="" class="logo">
+          <img src="../../lib/images/a.png" @click="showDrawer" alt="" class="logo">
         </div>
       </div>
       <div class="valid">
@@ -104,6 +53,57 @@
         </div>
       </div>
     </div>
+
+    <div :style="{width: style.gap + 'px'}"></div>
+
+    <div class="board-item board-right" :style="redBgStyle">
+      <div class="name" :style="nameStyle">{{performer.red.name}}</div>
+      <div class="attention">
+        <div class="title" :style="titleStyle">
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.attention.remove')" type="md-remove" :size="style.iconSize" />
+          &nbsp;注意&nbsp;
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.attention.add')" type="md-add" :size="style.iconSize" />
+        </div>
+        <div class="content" :style="contentStyle">{{performer.red.attention}}</div>
+      </div>
+      <div class="advantage">
+        <div class="title" :style="titleStyle">
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.advantageAttack.remove')" type="md-remove" :size="style.iconSize" />
+          &nbsp;优势&nbsp;
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.advantageAttack.add')" type="md-add" :size="style.iconSize" />
+        </div>
+        <div class="content" :style="contentStyle">{{performer.red.advantageAttack}}</div>
+      </div>
+      <div class="warn">
+        <div class="title" :style="titleStyle">
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.warn.remove')" type="md-remove" :size="style.iconSize" />
+          &nbsp;警告&nbsp;
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.warn.add')" type="md-add" :size="style.iconSize" />
+        </div>
+        <div class="content" :style="contentStyle" style="position: relative;">
+          <div v-for="item in (performer.red.warn)" :key="item" class="dot" :style="dotStyle"></div>
+          <img src="../../lib/images/b.png" @click="showDrawer" alt="" class="logo">
+        </div>
+      </div>
+      <div class="valid">
+        <div class="title" :style="titleStyle">
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.normalAttack.remove')" type="md-remove" :size="style.iconSize" />
+          &nbsp;有效&nbsp;
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.normalAttack.add')" type="md-add" :size="style.iconSize" />
+        </div>
+        <div class="content" :style="contentStyle">{{performer.red.normalAttack}}</div>
+      </div>
+      <div class="read">
+        <div class="title" :style="titleStyle">
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.secondReading.remove')" type="md-remove" :size="style.iconSize" />
+          &nbsp;读秒&nbsp;
+          <Icon class="icon" :style="iconClass" @click="scoreChange('red.secondReading.add')" type="md-add" :size="style.iconSize" />
+        </div>
+        <div class="content" :style="contentStyle">
+          <div v-for="item in (performer.red.secondReading)" :key="item" class="dot" :style="dotStyle"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -118,14 +118,13 @@
     <!-- <br> -->
     <div>
       运动员：
-      <Select v-model="tempData.red" style="width:200px" clearable not-found-text="请先录入运动员姓名">
-        <!-- <div style="background: red;" slot="prefix" >&nbsp;&nbsp;&nbsp;&nbsp;</div> -->
-        <Icon style="color: red;" type="ios-contact" slot="prefix" size="20" />
-        <Option v-for="item in athletes" :value="item" :disabled="tempData.blue === item" :key="item">{{ item }}</Option>
-      </Select>
       <Select v-model="tempData.blue" style="width:200px" clearable not-found-text="请先录入运动员姓名">
         <Icon style="color: blue;" type="ios-contact" slot="prefix" size="20" />
         <Option v-for="item in athletes" :value="item" :disabled="tempData.red === item" :key="item">{{ item }}</Option>
+      </Select>
+      <Select v-model="tempData.red" style="width:200px" clearable not-found-text="请先录入运动员姓名">
+        <Icon style="color: red;" type="ios-contact" slot="prefix" size="20" />
+        <Option v-for="item in athletes" :value="item" :disabled="tempData.blue === item" :key="item">{{ item }}</Option>
       </Select>
     </div>
     <br>
@@ -477,14 +476,14 @@
       redBgStyle() {
         return {
           background: `linear-gradient(to bottom, ${this.style.redStart}, ${this.style.redEnd})`,
-          'grid-template-columns': `${this.style.outerColumn}% 1fr`,
+          'grid-template-columns': `1fr ${this.style.outerColumn}%`,
           ...this.rowStyle
         }
       },
       blueBgStyle() {
         return {
           background: `linear-gradient(to bottom, ${this.style.blueStart}, ${this.style.blueEnd})`,
-          'grid-template-columns': `1fr ${this.style.outerColumn}%`,
+          'grid-template-columns': `${this.style.outerColumn}% 1fr`,
           ...this.rowStyle
         }
       },
